@@ -74,7 +74,32 @@ def get_ways_m( total: int, values: list ):
         find_ways(total, values, [])
         return len(count), answer
 
+# ===============================
+# Iteration/ Dynamic Programming
+# ===============================
 
+def get_ways_i( total: int, values: list ):
+        iterations = defaultdict(list)
+        
+        for iters in range(total+1):
+                #iterate 0 to total, should be total+1 iterations
+                iterations[iters]
+                for items in values:
+                        result = iters - items
+                        if result < 0:
+                                #prevent  negative numbers
+                                break
+                        if iters == items:
+                                iterations[iters].append([items])
+                                # base case, if the iters is a value then add it
+                        for combos in iterations[result]:
+                                new_combo = sorted(combos + [items])
+                                #new_combo is the index of the iteration you shoud check, then just add that
+                                if new_combo not in iterations[iters]:
+                                        iterations[iters].append(new_combo)
+
+        return iterations[total]
+                
 #=============================
 # Analysis and Comparison of different methods
 #=============================
@@ -87,9 +112,20 @@ for tc in test_cases:
         r1, r2 = get_ways_r(tc,values)
 
         #print( "total: {}, recursion: {}, memoization: {}".format(tc, r1, m1))
+
+for tc in test_cases:
+        i1 = get_ways_i(tc, values)
+
+        print("total: {}, iteration: {}".format( tc, len(i1)))
+
         
 #number of recursive calls for each total value.
 #total: 10, recursion: 49, memoization: 36
 #total: 20, recursion: 2533, memoization: 322
 #total: 30, recursion: 128228, memoization: 1287
-                 
+
+#Iterations number of different combinations
+#time complexity = o(n +m) where n = goal +1 and m = number of different values
+#total: 10, iteration: 5
+#total: 20, iteration: 21
+#total: 30, iteration: 51
