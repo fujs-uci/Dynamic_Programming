@@ -48,6 +48,7 @@ def get_ways_m( total: int, values: list ):
         answer = []
         memoize = defaultdict(list)
         #new data structure to keep account of all {total:[curr]} occurences
+        #dictionary might make this extremely slow
         count = []
 
         def find_ways(total: int, values: list, curr: list):
@@ -80,7 +81,7 @@ def get_ways_m( total: int, values: list ):
 
 def get_ways_i( total: int, values: list ):
         iterations = defaultdict(list)
-        
+        #using a dictionary makes the code extremely show at larger totals
         for iters in range(total+1):
                 #iterate 0 to total, should be total+1 iterations
                 iterations[iters]
@@ -99,13 +100,26 @@ def get_ways_i( total: int, values: list ):
                                         iterations[iters].append(new_combo)
 
         return iterations[total]
+
+def get_ways_i2( total: int, values: list ):
+        iterations = [0 for iters in range(total+1)]
+        for value in values:
+                for index, item in enumerate(iterations):
+                        result = index - value
+                        if result < 0:
+                                continue
+                        elif index == value:
+                                iterations[index] += 1
+                        else:
+                                iterations[index] += iterations[result]
+        return iterations[total]
                 
 #=============================
 # Analysis and Comparison of different methods
 #=============================
 
-test_cases = [10,20,30]
-values = [2,5,3,6]
+test_cases = [10,20,30,40,50]
+values = [4,3,6,9]
 
 for tc in test_cases:
         m1, m2 = get_ways_m(tc, values)
@@ -115,8 +129,8 @@ for tc in test_cases:
 
 for tc in test_cases:
         i1 = get_ways_i(tc, values)
-
-        print("total: {}, iteration: {}".format( tc, len(i1)))
+        i2 = get_ways_i2(tc, values)
+        print("total: {}, i1: {}, i2:{}".format( tc, len(i1), i2))
 
         
 #number of recursive calls for each total value.
