@@ -80,31 +80,13 @@ def get_ways_m( total: int, values: list ):
 # ===============================
 
 def get_ways_i( total: int, values: list ):
-        iterations = defaultdict(list)
-        #using a dictionary makes the code extremely show at larger totals
-        for iters in range(total+1):
-                #iterate 0 to total, should be total+1 iterations
-                iterations[iters]
-                for items in values:
-                        result = iters - items
-                        if result < 0:
-                                #prevent  negative numbers
-                                break
-                        if iters == items:
-                                iterations[iters].append([items])
-                                # base case, if the iters is a value then add it
-                        for combos in iterations[result]:
-                                new_combo = sorted(combos + [items])
-                                #new_combo is the index of the iteration you shoud check, then just add that
-                                if new_combo not in iterations[iters]:
-                                        iterations[iters].append(new_combo)
-
-        return iterations[total]
-
-def get_ways_i2( total: int, values: list ):
         iterations = [0 for iters in range(total+1)]
+        #think of this array representing the number you multiple the value in values to get the index
+        # index = numbers in range(total+1)
         for value in values:
                 for index, item in enumerate(iterations):
+                        #iterations array becomes  like a two dimensional array as value in values iterates
+                        # the previous iteration's array gets added to the current iteration's array
                         result = index - value
                         if result < 0:
                                 continue
@@ -112,34 +94,7 @@ def get_ways_i2( total: int, values: list ):
                                 iterations[index] += 1
                         else:
                                 iterations[index] += iterations[result]
+                                #adding the previous array to the current array
+                        
+
         return iterations[total]
-                
-#=============================
-# Analysis and Comparison of different methods
-#=============================
-
-test_cases = [10,20,30,40,50]
-values = [4,3,6,9]
-
-for tc in test_cases:
-        m1, m2 = get_ways_m(tc, values)
-        r1, r2 = get_ways_r(tc,values)
-
-        #print( "total: {}, recursion: {}, memoization: {}".format(tc, r1, m1))
-
-for tc in test_cases:
-        i1 = get_ways_i(tc, values)
-        i2 = get_ways_i2(tc, values)
-        print("total: {}, i1: {}, i2:{}".format( tc, len(i1), i2))
-
-        
-#number of recursive calls for each total value.
-#total: 10, recursion: 49, memoization: 36
-#total: 20, recursion: 2533, memoization: 322
-#total: 30, recursion: 128228, memoization: 1287
-
-#Iterations number of different combinations
-#time complexity = o(n +m) where n = goal +1 and m = number of different values
-#total: 10, iteration: 5
-#total: 20, iteration: 21
-#total: 30, iteration: 51
