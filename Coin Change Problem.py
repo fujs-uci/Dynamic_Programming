@@ -75,6 +75,21 @@ def get_ways_m( total: int, values: list ):
         return len(count), answer
 
 
-print(get_ways_r(10, [2,5,3,6]))
-print(get_ways_m(10, [2,5,3,6]))
+#=============================
+# Analysis and Comparison of different methods
+#=============================
+
+test_cases = [10,20,30]
+values = [2,5,3,6]
+
+for tc in test_cases:
+        m1, m2 = get_ways_m(tc, values)
+        r1, r2 = get_ways_r(tc,values)
+
+        #print( "total: {}, recursion: {}, memoization: {}".format(tc, r1, m1))
+        
+#number of recursive calls for each total value.
+#total: 10, recursion: 49, memoization: 36
+#total: 20, recursion: 2533, memoization: 322
+#total: 30, recursion: 128228, memoization: 1287
                  
