@@ -1,17 +1,8 @@
 import math
-
-"""
-
-for every possible n digit number
-start -> 1*10^(n-1)
-end -> 1*10^(n)
-y = [3,4,5]
-
-n - (y -1) = number of possible combinations
-
-"""
         
 def isPrime(n):
+        #returns a prime number.
+        # 0,1,2 are hard coded. This is an expensive function..
         prime = True
         check = math.sqrt(n)
         if n == 0:
@@ -27,11 +18,13 @@ def isPrime(n):
         return prime
 
 def indexInt(n):
-        #turns an int into a list of ints
+        # time complexity O(n)
         index = [int(i) for i in str(n)]
         return index
 
 def primeDigitSums(n):
+        # this is also expensive. loops through all possible n digit numbers
+        # checks all 1,2,3,4,5 combinations
         start = (1*(10**(n-1)))
         end = (1*(10**(n)))
         combos = [3,4,5]
@@ -47,12 +40,8 @@ def primeDigitSums(n):
 
 
 def checkSet(n: int):
-
-        #p_sum = previous sum, first sum of the array
-        #minus the first number, add the last number of increasing length subsets
-        # add list[index] to previous sum
-
-        first_list = indexInt(n) #first list is a list of length 1 already
+        # checks all combinations of length 1,2,3,4,5
+        first_list = indexInt(n)
 
         
         def checkSub(n: list,  length: int, end: int):
@@ -73,9 +62,6 @@ def checkSet(n: int):
                                         break
                         new_list.append(new_numb)
                 return checkSub(new_list, length + 1, end) and satisfies
-
-
-        pass
 
         return checkSub(first_list, 1, 5)
                         
