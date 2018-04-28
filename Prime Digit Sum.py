@@ -14,6 +14,8 @@ n - (y -1) = number of possible combinations
 def isPrime(n):
         prime = True
         check = math.sqrt(n)
+        if n == 0:
+                return False
         if n == 1:
                 return False
         if n == 2:
@@ -33,16 +35,16 @@ def primeDigitSums(n):
         start = (1*(10**(n-1)))
         end = (1*(10**(n)))
         combos = [3,4,5]
-        
-        # n - ( [3,4,5] - 1) = # of combinations
-        #for every n digit number
-                #for digit in [3,4,5]
-                        #for every possibility
-                                #check sum = prime
 
-        #3,4,5 property only applies to lengths that it applies to.
-        ans = []
-        pass
+        count = 0
+        number_list = []
+        for item in range(start,end+1):
+                if checkSet(item):
+                        number_list.append(item)
+                        count += 1
+        
+        return number_list
+
 
 def checkSet(n: int):
 
@@ -52,43 +54,41 @@ def checkSet(n: int):
 
         first_list = indexInt(n) #first list is a list of length 1 already
 
-        satisfies = True
         
         def checkSub(n: list,  length: int, end: int):
                 new_list = []
                 new_length = length + 1
+                satisfies = True
+                
                 if length > end-1:
-                        return
+                        return satisfies
                 for numb in range(len(n)):
                         if numb + 1 > len(n)-1:
                                 break
                         prev = n[numb] if type(n[numb]) == list else [n[numb]]
                         new_numb = prev + [first_list[numb+ length]]
-
-                        if length in [3,4,5]:
+                        if len(new_numb) in [3,4,5]:
                                 if not isPrime(sum(new_numb)):
                                         satisfies = False
                                         break
                         new_list.append(new_numb)
-
-                checkSub(new_list, length + 1, end)
+                return checkSub(new_list, length + 1, end) and satisfies
 
 
         pass
 
-        checkSub(first_list, 1, 5)
+        return checkSub(first_list, 1, 5)
                         
-        return satisfies
+
         
 
 
 if __name__ == "__main__":
-        #print(primeDigitSums(6))
-##        for i in range(6):
-##                print(primeDigitSums(i)
 
-        #primeDigitSums(6)
-        print(checkSet(101501))
+        pds = primeDigitSums(6)
+        print(pds)
+        print(len(pds))
+
                         
 
 
