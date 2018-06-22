@@ -28,6 +28,24 @@ class Solution:
         findSums( nums, target, [])
         return ans
 
+    def twoSums2(self, nums, target): #O(n) total
+        """
+        key points to understand:
+        the values of the dict are the sorted index of the original numbs list
+        the key is the difference needed to reach target
+        if the number is found later in the list, it will correctly look up the key
+        """
+
+        sum_buff = dict()
+        
+        if len(nums) == 0:
+            return False
+        for i in range(len(nums)):
+            if nums[i] in sum_buff:
+                return [sum_buff[nums[i]], i] #index of the difference and index of curr number
+            else:
+                sum_buff[target - nums[i]] = i # target - number = key; index = value
+
 checking = Solution()
 
 test1 = [8,2,5,3]
