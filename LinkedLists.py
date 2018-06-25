@@ -100,6 +100,10 @@ class addTwoNumbers:
                 if one== None and two == None:
                         if r == 1:
                                 goingIn(ans.next, None, None, r)
+                        else:
+                              if c == 0:
+                                   ans.next = None
+
                                 
                 elif one != None and two != None:
                         goingIn( ans.next, l1.next, l2.next, r)
@@ -115,8 +119,7 @@ class addTwoNumbers:
         goingIn(ans, l1.next, l2.next, r)
         
         return ans
-        
-        pass
+
 
 
                 
@@ -126,19 +129,19 @@ Test cases
 """
 prob = addTwoNumbers()
 
-one = ListNode(9)
-one.next = ListNode(9)
-one.next.next = ListNode(9)
+one = ListNode(5)
+#one.next = ListNode(4)
+#one.next.next = ListNode(3)
 
-two = ListNode(1)
-two.next = ListNode(8)
-two.next.next = ListNode(7)
+two = ListNode(5)
+#two.next = ListNode(6)
+#two.next.next = ListNode(4)
 
 
 c = prob.whileLoop(one,two)
-print(c.val, c.next.val, c.next.next.val, c.next.next.next.val)
+print(c.val, c.next.val)#, c.next.next.val)
 
 d = prob.recursion(one,two)
 
-print(d.val, d.next.val, d.next.next.val, d.next.next.next.val)
+print(d.val, d.next.val)#, d.next.next.val)
 
