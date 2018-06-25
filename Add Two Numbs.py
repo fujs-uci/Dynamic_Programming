@@ -10,9 +10,8 @@ challenge:
 
 completed:
         while loop method
-
-attempt:
         recursive method
+
 """
 
 class ListNode:
@@ -22,7 +21,8 @@ class ListNode:
         
 class addTwoNumbers:
 
-    def whileLoop(self, l1, l2):        
+    def whileLoop(self, l1, l2):
+        """Iterative method with a while loop"""
         value = 0
         r = 0
         curr_l1 = l1
@@ -65,20 +65,80 @@ class addTwoNumbers:
         
         return head
 
+    def recursion(self, l1,l2):
+        """recursive method that wil recursively call .next on each of the linked lists"""
+        c = l1.val + l2.val
+        r = 0
+        
+        if c > 9:
+                c = c - 10
+                r = 1
+
+        ans = ListNode(c)
+        
+        def goingIn(ans, l1, l2, r):
+                one = l1
+                two = l2
+                c = 0
+                        
+                if one != None:
+                        c += one.val
+                        
+                if two != None:
+                        c+= two.val
+
+                if r == 1:
+                        c += r
+                        r = 0
+
+                if c > 9:
+                        c = c - 10
+                        r = 1
+
+                ans.next = ListNode(c)
+                
+                if one== None and two == None:
+                        if r == 1:
+                                goingIn(ans.next, None, None, r)
+                                
+                elif one != None and two != None:
+                        goingIn( ans.next, l1.next, l2.next, r)
+                        
+                else:
+                        if one != None:
+                                goingIn(ans.next, l1.next, None, r)
+                                
+                        if two != None:
+                                goingIn(ans.next, None, l2.next, r)
+
+
+        goingIn(ans, l1.next, l2.next, r)
+        
+        return ans
+        
+        pass
+
+
                 
 
-
+"""
+Test cases
+"""
 prob = addTwoNumbers()
 
-one = ListNode(1)
-one.next = ListNode(2)
-one.next.next = ListNode(3)
+one = ListNode(9)
+one.next = ListNode(9)
+one.next.next = ListNode(9)
 
-two = ListNode(9)
+two = ListNode(1)
 two.next = ListNode(8)
 two.next.next = ListNode(7)
 
 
 c = prob.whileLoop(one,two)
 print(c.val, c.next.val, c.next.next.val, c.next.next.next.val)
+
+d = prob.recursion(one,two)
+
+print(d.val, d.next.val, d.next.next.val, d.next.next.next.val)
 
