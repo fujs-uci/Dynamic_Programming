@@ -1,0 +1,55 @@
+"""
+given a string, find the length of the longest substring w/o repeats
+
+examples:
+        "abcabcbb" -> "abc": 3
+        "bbbbbbb" -> "b": 1
+        "pwwkew" -> "wke" :3
+"""
+
+#ideas:
+#       loop all n characters
+#       store in dict the curr
+#       
+
+class solution:
+        def lengthOfLongestSubstring(self, s):
+                """
+                :type s: str
+                :rtype: int
+                """
+                longest = 0
+                current = 0
+                prev = None
+                repe = 0
+
+                check = dict()
+
+                for i in s:
+
+                        if i in check.keys():
+                                inBetween = abs( check[prev] - check[i]) + 1
+                                check[i] = inBetween
+                                current = inBetween
+                                repe += 1
+                        else:
+                                current += 1
+                                check[i] = current
+
+                        if current > longest:
+                                longest = current
+
+                        prev = i
+
+                return longest
+
+test1 = "abcabcbb"
+test2 = "bbbbbb"
+test3 = "pwwkew"
+test4 = "dvdf"
+test5 = "ckilbkd"
+test6 = "tmmzuxt"
+
+c = solution().lengthOfLongestSubstring(test6)
+print(c)
+
