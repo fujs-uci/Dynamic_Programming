@@ -6,50 +6,40 @@ examples:
         "bbbbbbb" -> "b": 1
         "pwwkew" -> "wke" :3
 """
+    
 
-#ideas:
-#       loop all n characters
-#       store in dict the curr
-#       
-
-class solution:
+class Solution:
         def lengthOfLongestSubstring(self, s):
-                """
-                :type s: str
-                :rtype: int
-                """
-                longest = 0
-                current = 0
-                prev = None
-                repe = 0
 
+                longest = start = current = 0
                 check = dict()
+                
+                for i in range(len(s)):
+                        
+                        if s[i] in check.keys():
+                                start = check[s[i]]+1 if check[s[i]] + 1 > start else start
+                                
+                        current = i - start + 1
+                        check[s[i]] = i
 
-                for i in s:
-
-                        if i in check.keys():
-                                inBetween = abs( check[prev] - check[i]) + 1
-                                check[i] = inBetween
-                                current = inBetween
-                                repe += 1
-                        else:
-                                current += 1
-                                check[i] = current
-
-                        if current > longest:
-                                longest = current
-
-                        prev = i
-
+                        longest = max(longest, current)
                 return longest
 
-test1 = "abcabcbb"
-test2 = "bbbbbb"
-test3 = "pwwkew"
-test4 = "dvdf"
-test5 = "ckilbkd"
-test6 = "tmmzuxt"
+test1 = ("abcabcbb", 3)
+test2 = ("bbbbbb" ,1)
+test3 = ("pwwkew" ,3)
+test4 = ("dvdf" ,3)
+test5 = ("ckilbkd",5)
+test6 = ("tmmzuxt" ,5)
 
-c = solution().lengthOfLongestSubstring(test6)
-print(c)
+testSol = [test1, test2, test3, test4, test5, test6]
+c = solution()
 
+for tests, sol in testSol:
+        try :
+                val = c.lengthOfLongestSubstring(tests)
+                assert(val == sol)
+                print(tests, sol)
+        except:
+                print("**Failed***", tests, sol, val)
+        
